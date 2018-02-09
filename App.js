@@ -3,14 +3,26 @@ import { Ionicons } from "@expo/vector-icons"
 import { TabNavigator, TabBarBottom, StackNavigator } from "react-navigation"
 import { Provider } from "react-redux"
 import { createStore } from "redux"
-import { StatusBar, Platform } from "react-native"
+import { StatusBar, Platform, ScrollView } from "react-native"
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 
 import PomodoroTimer from "./components/PomodoroTimer"
 import Todos from "./components/Todos"
 
 import pomodoroApp from "./reducers"
 
-const safePomodoroTimer = () => <PomodoroTimer />
+const store = createStore(pomodoroApp)
+
+const safePomodoroTimer = () => (
+  <KeyboardAwareScrollView
+    alwaysBounceVertical={false}
+    keyboardDismissMode={Platform.OS === "ios" ? "interactive" : "on-drag"}
+    viewIsInsideTabBar
+    keyboardOpeningTime={0}
+  >
+    <PomodoroTimer />
+  </KeyboardAwareScrollView>
+)
 const safeTodos = () => <Todos />
 
 const headerStyles = {
@@ -38,8 +50,6 @@ const TodosStack = StackNavigator({
     })
   }
 })
-
-const store = createStore(pomodoroApp)
 
 const Tabs = TabNavigator(
   {

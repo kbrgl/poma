@@ -6,6 +6,7 @@ import Timer from "../lib/Timer"
 import { tick, start, pause, reset, complete } from "../actions/timer"
 import TimerDisplay from "./TimerDisplay"
 import TimerControls from "./TimerControls"
+import Scratchpad from "./Scratchpad"
 
 class PomodoroTimer extends React.Component {
   static styles = StyleSheet.create({
@@ -63,6 +64,7 @@ class PomodoroTimer extends React.Component {
           active={this.props.active}
           started={this.props.started}
         />
+        <Scratchpad />
       </View>
     )
   }

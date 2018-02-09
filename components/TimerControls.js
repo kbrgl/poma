@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { View, StyleSheet, TouchableHighlight, Text } from "react-native"
+import { View, StyleSheet, TouchableHighlight, Text, Vibration } from "react-native"
 
 const Control = ({ onPress, title, backgroundColor, clickColor }) => (
   <TouchableHighlight
@@ -13,7 +13,10 @@ const Control = ({ onPress, title, backgroundColor, clickColor }) => (
       justifyContent: "center"
     }}
     underlayColor={clickColor}
-    onPress={onPress}
+    onPress={() => {
+      Vibration.vibrate(50)
+      onPress()
+    }}
   >
     <Text
       style={{
@@ -39,7 +42,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     width: "100%",
-    marginTop: 40
+    marginTop: 40,
+    marginBottom: 40
   }
 })
 
