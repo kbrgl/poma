@@ -1,6 +1,4 @@
-import { combineReducers } from "redux"
 import * as time from "../utils/time"
-import Timer from "../lib/Timer"
 import { WORK, LONG_BREAK, BREAK, START, PAUSE, RESET, COMPLETE, TICK } from "../constants/timer"
 
 const initialState = {
@@ -57,14 +55,13 @@ const timer = (state = initialState, action) => {
             // for explanation of overflow see lib/Timer.js
             time: state.times.longBreak - action.overflow
           }
-        } else {
-          // else give a short break
-          return {
-            ...state,
-            count: state.count + 1,
-            type: BREAK,
-            time: state.times.shortBreak - action.overflow
-          }
+        }
+        // else give a short break
+        return {
+          ...state,
+          count: state.count + 1,
+          type: BREAK,
+          time: state.times.shortBreak - action.overflow
         }
       }
       // if none of the above matched, start work cycle

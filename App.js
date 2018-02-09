@@ -1,13 +1,13 @@
 import React from "react"
-
-import { StyleSheet, SafeAreaView, View, TabBarIOS, StatusBar, Platform } from "react-native"
-import PomodoroTimer from "./components/PomodoroTimer"
-import Todos from "./components/Todos"
 import { Ionicons } from "@expo/vector-icons"
 import { TabNavigator, TabBarBottom, StackNavigator } from "react-navigation"
-
 import { Provider } from "react-redux"
 import { createStore } from "redux"
+import { SafeAreaView, StatusBar, Platform } from "react-native"
+
+import PomodoroTimer from "./components/PomodoroTimer"
+import Todos from "./components/Todos"
+
 import pomodoroApp from "./reducers"
 
 const safePomodoroTimer = () => (
@@ -31,7 +31,7 @@ const headerStyles = {
 const PomodoroStack = StackNavigator({
   PomodoroTimer: {
     screen: safePomodoroTimer,
-    navigationOptions: ({ navigation }) => ({
+    navigationOptions: () => ({
       title: "Pomodoro Timer",
       ...headerStyles
     })
@@ -40,14 +40,14 @@ const PomodoroStack = StackNavigator({
 const TodosStack = StackNavigator({
   Todos: {
     screen: safeTodos,
-    navigationOptions: ({ navigation }) => ({
+    navigationOptions: () => ({
       title: "Todos",
       ...headerStyles
     })
   }
 })
 
-let store = createStore(pomodoroApp)
+const store = createStore(pomodoroApp)
 
 const Tabs = TabNavigator(
   {
@@ -56,6 +56,7 @@ const Tabs = TabNavigator(
   },
   {
     navigationOptions: ({ navigation }) => ({
+      // eslint-disable-next-line
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state
         let iconName
@@ -76,18 +77,18 @@ const Tabs = TabNavigator(
       activeTintColor: "tomato",
       inactiveTintColor: "gray"
     },
-    animationEnabled: Platform.OS === "ios" ? false : true,
+    animationEnabled: Platform.OS !== "ios",
     swipeEnabled: false
   }
 )
 
-export default class App extends React.Component {
-  render() {
-    StatusBar.setBarStyle("light-content", true)
-    return (
-      <Provider store={store}>
-        <Tabs />
-      </Provider>
-    )
-  }
+const App = () => {
+  StatusBar.setBarStyle("light-content", true)
+  return (
+    <Provider store={store}>
+      <Tabs />
+    </Provider>
+  )
 }
+
+export default App

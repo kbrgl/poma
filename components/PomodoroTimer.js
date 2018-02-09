@@ -1,12 +1,20 @@
 import React from "react"
-import { View, Text, StyleSheet } from "react-native"
-import Timer from "../lib/Timer"
+import PropTypes from "prop-types"
+import { View, StyleSheet } from "react-native"
 import { connect } from "react-redux"
+import Timer from "../lib/Timer"
 import { tick, start, pause, reset, complete } from "../actions/timer"
 import TimerDisplay from "./TimerDisplay"
 import TimerControls from "./TimerControls"
 
 class PomodoroTimer extends React.Component {
+  static styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: "center"
+    }
+  })
+
   constructor(props) {
     super(props)
     this.timer = null
@@ -46,7 +54,7 @@ class PomodoroTimer extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={PomodoroTimer.styles.container}>
         <TimerDisplay ms={this.props.time} type={this.props.type} />
         <TimerControls
           start={this.start}
@@ -59,13 +67,17 @@ class PomodoroTimer extends React.Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center"
-  }
-})
+PomodoroTimer.propTypes = {
+  tick: PropTypes.func.isRequired,
+  start: PropTypes.func.isRequired,
+  pause: PropTypes.func.isRequired,
+  complete: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
+  time: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
+  active: PropTypes.bool.isRequired,
+  started: PropTypes.bool.isRequired
+}
 
 const mapStateToProps = state => ({
   time: state.timer.time,
@@ -92,6 +104,6 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-PomodoroTimer = connect(mapStateToProps, mapDispatchToProps)(PomodoroTimer)
+const connectedPomodoroTimer = connect(mapStateToProps, mapDispatchToProps)(PomodoroTimer)
 
-export default PomodoroTimer
+export default connectedPomodoroTimer

@@ -1,7 +1,5 @@
 import React from "react"
 
-const Todos = () => {
-  return null
-}
+const Todos = () => null
 
 export default Todos

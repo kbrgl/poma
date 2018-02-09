@@ -1,5 +1,6 @@
 import React from "react"
-import { Button, View, StyleSheet, TouchableHighlight, Text } from "react-native"
+import PropTypes from "prop-types"
+import { View, StyleSheet, TouchableHighlight, Text } from "react-native"
 
 const Control = ({ onPress, title, backgroundColor, clickColor }) => (
   <TouchableHighlight
@@ -25,27 +26,11 @@ const Control = ({ onPress, title, backgroundColor, clickColor }) => (
     </Text>
   </TouchableHighlight>
 )
-
-const TimerControls = ({ start, pause, reset, active, started }) => {
-  return (
-    <View style={styles.view}>
-      {started ? (
-        <Control onPress={reset} title="Reset" backgroundColor="gray" clickColor="black" />
-      ) : (
-        <Control onPress={reset} title="Reset" backgroundColor="lightgray" clickColor="lightgray" />
-      )}
-      {active ? (
-        <Control onPress={pause} title="Pause" backgroundColor="#eaa82e" clickColor="#8c7a2e" />
-      ) : (
-        <Control
-          onPress={start}
-          title={started ? "Resume" : "Start"}
-          backgroundColor="tomato"
-          clickColor="#a34332"
-        />
-      )}
-    </View>
-  )
+Control.propTypes = {
+  onPress: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  backgroundColor: PropTypes.string.isRequired,
+  clickColor: PropTypes.string.isRequired
 }
 
 const styles = StyleSheet.create({
@@ -57,5 +42,32 @@ const styles = StyleSheet.create({
     marginTop: 40
   }
 })
+
+const TimerControls = ({ start, pause, reset, active, started }) => (
+  <View style={styles.view}>
+    {started ? (
+      <Control onPress={reset} title="Reset" backgroundColor="gray" clickColor="black" />
+    ) : (
+      <Control onPress={reset} title="Reset" backgroundColor="lightgray" clickColor="lightgray" />
+    )}
+    {active ? (
+      <Control onPress={pause} title="Pause" backgroundColor="#eaa82e" clickColor="#8c7a2e" />
+    ) : (
+      <Control
+        onPress={start}
+        title={started ? "Resume" : "Start"}
+        backgroundColor="tomato"
+        clickColor="#a34332"
+      />
+    )}
+  </View>
+)
+TimerControls.propTypes = {
+  start: PropTypes.func.isRequired,
+  pause: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
+  active: PropTypes.bool.isRequired,
+  started: PropTypes.bool.isRequired
+}
 
 export default TimerControls
