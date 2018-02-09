@@ -3,23 +3,15 @@ import { Ionicons } from "@expo/vector-icons"
 import { TabNavigator, TabBarBottom, StackNavigator } from "react-navigation"
 import { Provider } from "react-redux"
 import { createStore } from "redux"
-import { SafeAreaView, StatusBar, Platform } from "react-native"
+import { StatusBar, Platform } from "react-native"
 
 import PomodoroTimer from "./components/PomodoroTimer"
 import Todos from "./components/Todos"
 
 import pomodoroApp from "./reducers"
 
-const safePomodoroTimer = () => (
-  <SafeAreaView>
-    <PomodoroTimer />
-  </SafeAreaView>
-)
-const safeTodos = () => (
-  <SafeAreaView>
-    <Todos />
-  </SafeAreaView>
-)
+const safePomodoroTimer = () => <PomodoroTimer />
+const safeTodos = () => <Todos />
 
 const headerStyles = {
   headerStyle: { backgroundColor: "tomato" },
