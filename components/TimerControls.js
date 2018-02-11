@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { View, StyleSheet, TouchableHighlight, Text, Vibration } from "react-native"
+import { View, StyleSheet, TouchableHighlight, Text, Vibration, Platform } from "react-native"
+import ReactNativeHaptic from "react-native-haptic"
 
 const Control = ({ onPress, title, backgroundColor, clickColor }) => (
   <TouchableHighlight
@@ -14,7 +15,8 @@ const Control = ({ onPress, title, backgroundColor, clickColor }) => (
     }}
     underlayColor={clickColor}
     onPress={() => {
-      Vibration.vibrate(50)
+      if (Platform.OS === "ios") ReactNativeHaptic.generate("impact")
+      else Vibration.vibrate(3)
       onPress()
     }}
   >

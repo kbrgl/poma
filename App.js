@@ -1,29 +1,17 @@
 import React from "react"
-import { Ionicons } from "@expo/vector-icons"
+import Icon from "react-native-vector-icons/Ionicons"
 import { TabNavigator, TabBarBottom, StackNavigator } from "react-navigation"
 import { Provider } from "react-redux"
 import { createStore } from "redux"
-import { StatusBar, Platform, ScrollView } from "react-native"
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
+import { StatusBar, Platform } from "react-native"
 
 import PomodoroTimer from "./components/PomodoroTimer"
+import Settings from "./components/Settings"
 import Todos from "./components/Todos"
 
 import pomodoroApp from "./reducers"
 
 const store = createStore(pomodoroApp)
-
-const safePomodoroTimer = () => (
-  <KeyboardAwareScrollView
-    alwaysBounceVertical={false}
-    keyboardDismissMode={Platform.OS === "ios" ? "interactive" : "on-drag"}
-    viewIsInsideTabBar
-    keyboardOpeningTime={0}
-  >
-    <PomodoroTimer />
-  </KeyboardAwareScrollView>
-)
-const safeTodos = () => <Todos />
 
 const headerStyles = {
   headerStyle: { backgroundColor: "tomato" },
@@ -34,7 +22,7 @@ const headerStyles = {
 
 const PomodoroStack = StackNavigator({
   PomodoroTimer: {
-    screen: safePomodoroTimer,
+    screen: PomodoroTimer,
     navigationOptions: () => ({
       title: "Pomodoro Timer",
       ...headerStyles
@@ -43,9 +31,18 @@ const PomodoroStack = StackNavigator({
 })
 const TodosStack = StackNavigator({
   Todos: {
-    screen: safeTodos,
+    screen: Todos,
     navigationOptions: () => ({
       title: "Todos",
+      ...headerStyles
+    })
+  }
+})
+const SettingsStack = StackNavigator({
+  Settings: {
+    screen: Settings,
+    navigationOptions: () => ({
+      title: "Settings",
       ...headerStyles
     })
   }
@@ -54,7 +51,8 @@ const TodosStack = StackNavigator({
 const Tabs = TabNavigator(
   {
     Timer: { screen: PomodoroStack },
-    Todos: { screen: TodosStack }
+    Todos: { screen: TodosStack },
+    Settings: { screen: SettingsStack }
   },
   {
     navigationOptions: ({ navigation }) => ({
@@ -64,13 +62,15 @@ const Tabs = TabNavigator(
         let iconName
         if (routeName === "Timer") {
           iconName = `ios-timer${focused ? "" : "-outline"}`
+        } else if (routeName === "Settings") {
+          iconName = `ios-cog`
         } else if (routeName === "Todos") {
           iconName = `ios-star${focused ? "" : "-outline"}`
         }
 
         // You can return any component that you like here! We usually use an
         // icon component from react-native-vector-icons
-        return <Ionicons name={iconName} size={25} color={tintColor} />
+        return <Icon name={iconName} size={25} color={tintColor} />
       }
     }),
     tabBarComponent: TabBarBottom,

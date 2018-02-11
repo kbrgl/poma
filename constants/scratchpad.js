@@ -1,2 +1,2 @@
 // eslint-disable-next-line
-export const UPDATE = "UPDATE"
+export const SCRATCHPAD_UPDATE = "UPDATE"

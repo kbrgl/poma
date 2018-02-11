@@ -1,15 +1,24 @@
 import * as time from "../utils/time"
 import { complete } from "../actions/timer"
-import { WORK, LONG_BREAK, BREAK, START, PAUSE, RESET, COMPLETE, TICK } from "../constants/timer"
+import {
+  WORK,
+  LONG_BREAK,
+  BREAK,
+  TIMER_START,
+  TIMER_PAUSE,
+  TIMER_RESET,
+  TIMER_COMPLETE,
+  TIMER_TICK
+} from "../constants/timer"
 
 const initialState = {
   // type of cycle
   type: WORK,
   // duration of different cycle types
   times: {
-    work: time.seconds(8),
-    shortBreak: time.seconds(5),
-    longBreak: time.seconds(15)
+    work: time.minutes(25),
+    shortBreak: time.minutes(5),
+    longBreak: time.minutes(30)
   },
   // whether the timer has been started
   started: false,
@@ -23,7 +32,7 @@ initialState.time = initialState.times.work
 const timer = (state = initialState, action) => {
   switch (action.type) {
     // tick of the internal timer, not managed by the reducer
-    case TICK:
+    case TIMER_TICK:
       // The component managing the timer passes the new time to the reducer
       // which updates the state.
       // The new time is passed to the component through its props, and at
@@ -32,19 +41,19 @@ const timer = (state = initialState, action) => {
         ...state,
         time: action.time
       }
-    case START:
+    case TIMER_START:
       return {
         ...state,
         active: true,
         started: true
       }
-    case PAUSE:
+    case TIMER_PAUSE:
       return {
         ...state,
         active: false
       }
     // eslint-disable-next-line
-    case COMPLETE:
+    case TIMER_COMPLETE:
       // important for it to be this way - state has to be copied, not assigned
       // otherwise redux will not see changes, as it compares the
       // memory locations
@@ -73,7 +82,7 @@ const timer = (state = initialState, action) => {
       }
       res.time -= action.overflow
       return res
-    case RESET:
+    case TIMER_RESET:
       return initialState
     default:
       return state

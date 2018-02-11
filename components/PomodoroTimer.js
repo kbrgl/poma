@@ -1,7 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, Platform } from "react-native"
 import { connect } from "react-redux"
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Timer from "../lib/Timer"
 import { tick, start, pause, reset, complete } from "../actions/timer"
 import TimerDisplay from "./TimerDisplay"
@@ -55,17 +56,24 @@ class PomodoroTimer extends React.Component {
 
   render() {
     return (
-      <View style={PomodoroTimer.styles.container}>
-        <TimerDisplay ms={this.props.time} type={this.props.type} />
-        <TimerControls
-          start={this.start}
-          pause={this.pause}
-          reset={this.reset}
-          active={this.props.active}
-          started={this.props.started}
-        />
-        <Scratchpad />
-      </View>
+      <KeyboardAwareScrollView
+        alwaysBounceVertical={false}
+        keyboardDismissMode={Platform.OS === "ios" ? "interactive" : "on-drag"}
+        viewIsInsideTabBar
+        keyboardOpeningTime={0}
+      >
+        <View style={PomodoroTimer.styles.container}>
+          <TimerDisplay ms={this.props.time} type={this.props.type} />
+          <TimerControls
+            start={this.start}
+            pause={this.pause}
+            reset={this.reset}
+            active={this.props.active}
+            started={this.props.started}
+          />
+          <Scratchpad />
+        </View>
+      </KeyboardAwareScrollView>
     )
   }
 }

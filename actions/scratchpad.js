@@ -1,7 +1,7 @@
-import { UPDATE } from "../constants/scratchpad"
+import { SCRATCHPAD_UPDATE } from "../constants/scratchpad"
 
 // eslint-disable-next-line
 export const update = ({ text }) => ({
-  type: UPDATE,
+  type: SCRATCHPAD_UPDATE,
   text
 })
