@@ -1,4 +1,5 @@
 {
     "flow.useNPMPackagedFlow": true,
     "javascript.validate.enable": false,
+    "react-native-tools.projectRoot": "app"
 }

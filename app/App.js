@@ -5,9 +5,9 @@ import { Provider } from "react-redux"
 import { createStore } from "redux"
 import { StatusBar, Platform } from "react-native"
 
-import PomodoroTimer from "./components/PomodoroTimer"
-import Settings from "./components/Settings"
-import Todos from "./components/Todos"
+import PomodoroTimer from "./screens/PomodoroTimer"
+import Settings from "./screens/Settings"
+import Todos from "./screens/Todos"
 
 import pomodoroApp from "./reducers"
 

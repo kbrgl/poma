@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { Text, StyleSheet } from "react-native"
-import { formatMS } from "../utils/time"
+import { formatMS } from "../../utils/time"
 
 const styles = StyleSheet.create({
   display: {
@@ -16,13 +16,13 @@ const styles = StyleSheet.create({
   }
 })
 
-const TimerDisplay = ({ ms }) => (
+const TimerDisplay = ({ time }) => (
   <Text numberOfLines={1} style={styles.display}>
-    {formatMS(ms)}
+    {formatMS(time)}
   </Text>
 )
 TimerDisplay.propTypes = {
-  ms: PropTypes.number.isRequired
+  time: PropTypes.number.isRequired
 }
 
 export default TimerDisplay

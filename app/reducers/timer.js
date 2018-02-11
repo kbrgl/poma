@@ -20,10 +20,10 @@ const initialState = {
     shortBreak: time.minutes(5),
     longBreak: time.minutes(30)
   },
-  // whether the timer has been started
-  started: false,
+  // whether the timer has been isActive
+  isActive: false,
   // whether the timer is currently ticking
-  active: false,
+  isRunning: false,
   // number of pomodoros (work cycles) completed
   count: 0
 }
@@ -44,13 +44,13 @@ const timer = (state = initialState, action) => {
     case TIMER_START:
       return {
         ...state,
-        active: true,
-        started: true
+        isRunning: true,
+        isActive: true
       }
     case TIMER_PAUSE:
       return {
         ...state,
-        active: false
+        isRunning: false
       }
     // eslint-disable-next-line
     case TIMER_COMPLETE:

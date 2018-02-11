@@ -3,11 +3,11 @@ import PropTypes from "prop-types"
 import { View, StyleSheet, Platform } from "react-native"
 import { connect } from "react-redux"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import Timer from "../lib/Timer"
-import { tick, start, pause, reset, complete } from "../actions/timer"
-import TimerDisplay from "./TimerDisplay"
+import Timer from "../../lib/Timer"
+import { tick, start, pause, reset, complete } from "../../actions/timer"
 import TimerControls from "./TimerControls"
-import Scratchpad from "./Scratchpad"
+import TimerDisplay from "./TimerDisplay"
+import Scratchpad from "../../components/Scratchpad"
 
 class PomodoroTimer extends React.Component {
   static styles = StyleSheet.create({
@@ -63,13 +63,13 @@ class PomodoroTimer extends React.Component {
         keyboardOpeningTime={0}
       >
         <View style={PomodoroTimer.styles.container}>
-          <TimerDisplay ms={this.props.time} type={this.props.type} />
+          <TimerDisplay time={this.props.time} />
           <TimerControls
             start={this.start}
             pause={this.pause}
             reset={this.reset}
-            active={this.props.active}
-            started={this.props.started}
+            isRunning={this.props.isRunning}
+            isActive={this.props.isActive}
           />
           <Scratchpad />
         </View>
@@ -84,16 +84,15 @@ PomodoroTimer.propTypes = {
   complete: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   time: PropTypes.number.isRequired,
-  type: PropTypes.string.isRequired,
-  active: PropTypes.bool.isRequired,
-  started: PropTypes.bool.isRequired
+  isActive: PropTypes.bool.isRequired,
+  isRunning: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = state => ({
   time: state.timer.time,
   type: state.timer.type,
-  active: state.timer.active,
-  started: state.timer.started
+  isRunning: state.timer.isRunning,
+  isActive: state.timer.isActive
 })
 
 const mapDispatchToProps = dispatch => ({
