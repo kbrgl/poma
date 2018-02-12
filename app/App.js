@@ -2,16 +2,22 @@ import React from "react"
 import Icon from "react-native-vector-icons/Ionicons"
 import { TabNavigator, TabBarBottom, StackNavigator } from "react-navigation"
 import { Provider } from "react-redux"
-import { createStore } from "redux"
+import { createStore, applyMiddleware } from "redux"
 import { StatusBar, Platform } from "react-native"
+import createSagaMiddleware from "redux-saga"
+import logger from "redux-logger"
 
 import PomodoroTimer from "./screens/PomodoroTimer"
 import Settings from "./screens/Settings"
 import Todos from "./screens/Todos"
 
+import rootSaga from "./sagas"
+
 import pomodoroApp from "./reducers"
 
-const store = createStore(pomodoroApp)
+const sagaMiddleware = createSagaMiddleware()
+const store = createStore(pomodoroApp, applyMiddleware(sagaMiddleware), applyMiddleware(logger))
+sagaMiddleware.run(rootSaga)
 
 const headerStyles = {
   headerStyle: { backgroundColor: "tomato" },

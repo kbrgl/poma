@@ -1,25 +1,29 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Text, StyleSheet } from "react-native"
+import { Text, StyleSheet, View } from "react-native"
 import { formatMS } from "../../utils/time"
 
 const styles = StyleSheet.create({
-  display: {
-    fontSize: 110,
-    fontWeight: "200",
+  container: {
     backgroundColor: "#ffffff",
-    width: "100%",
-    borderRadius: 2,
-    paddingTop: 30,
-    paddingBottom: 30,
-    textAlign: "center"
+    alignSelf: "stretch",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 30
+  },
+  text: {
+    fontSize: 110,
+    fontWeight: "200"
   }
 })
 
 const TimerDisplay = ({ time }) => (
-  <Text numberOfLines={1} style={styles.display}>
-    {formatMS(time)}
-  </Text>
+  <View style={styles.container}>
+    <Text style={styles.text} numberOfLines={1}>
+      {formatMS(time)}
+    </Text>
+  </View>
 )
 TimerDisplay.propTypes = {
   time: PropTypes.number.isRequired

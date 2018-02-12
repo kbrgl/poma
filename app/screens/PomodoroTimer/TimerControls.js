@@ -5,12 +5,11 @@ import RoundButton from "../../components/RoundButton"
 
 const styles = StyleSheet.create({
   view: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "space-around",
-    width: "100%",
     marginTop: 40,
-    marginBottom: 40
+    marginBottom: 40,
+    alignSelf: "stretch"
   }
 })
 
