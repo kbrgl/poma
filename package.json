@@ -15,7 +15,7 @@
     "flow": "^0.2.3",
     "flow-bin": "0.56.0",
     "jest-expo": "25.0.0",
-    "react-test-renderer": "16.2.0",
+    "react-test-renderer": "16.2.0"
   },
   "scripts": {
     "start": "react-native start",
